@@ -1,14 +1,20 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+/**
+ * @file lib.rs
+ * @author Krisna Pranav
+ * @brief robots-policy.
+ * @version 1.0
+ * @date 2024-11-25
+ *
+ * @copyright Copyright (c) 2024 Doodle Developers, Krisna Pranav
+ *
+ */
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+const MAX_CHAR_LIMIT_DEFAULT: usize = 512_000;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+mod parser;
+
+use itertools::Itertools;
+use std::time::Duration;
+use url::Url;
+
+use crate::parser::Line;
