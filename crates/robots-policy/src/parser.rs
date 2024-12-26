@@ -28,6 +28,22 @@ pub enum Line<'a> {
     Raw(()),
 } // pub enum Line<'a>
 
+pub fn parse(input: &str) -> IResult<&str, Vec<Line>> {
+    let (input, (lines, _)) = many_till(
+        alt((
+            parse_user_agent,
+            parse_allow,
+            parse_disallow,
+            parse_sitemap,
+            parse_crawl_delay,
+            parse_raw,
+        )),
+        eof,
+    )(input)?;
+
+    Ok((input, lines))
+} // pub fn parse(input: &str) -> IResult<&str, Vec<Line>>
+
 fn is_not_line_ending(c: char) -> bool {
     c != '\n' && c != '\r'
 } // fn is_not_line_ending(c: char) -> bool
