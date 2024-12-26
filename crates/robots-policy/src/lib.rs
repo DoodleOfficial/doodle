@@ -12,6 +12,7 @@
 const MAX_CHAR_LIMIT_DEFAULT: usize = 512_000;
 
 mod parser;
+mod pattern;
 
 use itertools::Itertools;
 use std::time::Duration;
