@@ -1,0 +1,15 @@
+[package]
+name = "robots-policy"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow.workspace = true
+itertools.workspace = true
+nom.workspace = true
+percent-encoding.workspace = true
+url.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true
+regex.workspace = true
