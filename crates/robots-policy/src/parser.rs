@@ -55,3 +55,38 @@ fn is_not_line_ending_or_comment(c: char) -> bool {
 fn is_carriage_return(c: char) -> bool {
     c == '\r'
 }
+
+fn consume_newline(input: &str) -> IResult<&str, Option<&str>> {
+    let (input, _) = take_while(is_carriage_return)(input)?;
+    let (input, output) = opt(tag("\n"))(input)?;
+    Ok((input, output))
+}
+
+fn product(input: &str) -> IResult<&str, &str> {
+    let (input, _) = alt((preceded(space0, tag(":")), space1))(input)?;
+    let (input, line) = take_while(is_not_line_ending_or_comment)(input)?;
+    let (input, _) = opt(preceded(tag("#"), take_while(is_not_line_ending)))(input)?;
+    let (input, _) = consume_newline(input)?;
+    let line = line.trim();
+    Ok((input, line))
+}
+
+fn parse_user_agent(input: &str) -> IResult<&str, Line> {
+    let useragent = (
+        tag_no_case("user-agent"),
+        tag_no_case("user agent"),
+        tag_no_case("useragent"),
+        tag_no_case("user-agents"),
+        tag_no_case("user agents"),
+        tag_no_case("useragents"),
+    );
+    let (input, _) = preceded(space0, alt(useragent))(input)?;
+    let (input, user_agents) = product(input)?;
+
+    let user_agents = user_agents
+        .split_whitespace()
+        .flat_map(|x| x.split(','))
+        .collect();
+
+    Ok((input, Line::UserAgent(user_agents)))
+}
