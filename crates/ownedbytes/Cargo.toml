@@ -1,0 +1,8 @@
+[package]
+name = "ownedbytes"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+memmap2.workspace = true
+stable_deref_trait.workspace = true
