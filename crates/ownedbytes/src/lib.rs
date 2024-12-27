@@ -125,3 +125,110 @@ impl OwnedBytes {
         u64::from_le_bytes(self.read_n())
     }
 } // impl OwnedBytes
+
+impl Deref for OwnedBytes {
+    type Target = [u8];
+
+    #[inline]
+    fn deref(&self) -> &Self::Target {
+        self.data
+    }
+} // impl Deref for OwnedBytes
+
+impl AsRef<[u8]> for OwnedBytes {
+    #[inline]
+    fn as_ref(&self) -> &[u8] {
+        self.data
+    }
+} // impl AsRef<[u8]> for OwnedBytes
+
+impl fmt::Debug for OwnedBytes {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let bytes_truncated: &[u8] = if self.len() > 8 {
+            &self.as_slice()[..8]
+        } else {
+            self.as_slice()
+        };
+
+        write!(f, "OwnedBytes({bytes_truncated:?}, len={})", self.len())
+    }
+} // impl fmt::Debug for OwnedBytes
+
+impl Clone for OwnedBytes {
+    fn clone(&self) -> Self {
+        OwnedBytes {
+            data: self.data,
+            box_stable_deref: self.box_stable_deref.clone(),
+        }
+    }
+} // impl Clone for OwnedBytes
+
+impl io::Read for OwnedBytes {
+    #[inline]
+    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        let data_len = self.data.len();
+        let buf_len = buf.len();
+        if data_len >= buf_len {
+            let data = self.advance(buf_len);
+            buf.copy_from_slice(data);
+            Ok(buf_len)
+        } else {
+            buf[..data_len].copy_from_slice(self.data);
+            self.data = &[];
+            Ok(data_len)
+        }
+    }
+    #[inline]
+    fn read_to_end(&mut self, buf: &mut Vec<u8>) -> io::Result<usize> {
+        buf.extend(self.data);
+        let read_len = self.data.len();
+        self.data = &[];
+        Ok(read_len)
+    }
+    #[inline]
+    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
+        let read_len = self.read(buf)?;
+        if read_len != buf.len() {
+            return Err(io::Error::new(
+                io::ErrorKind::UnexpectedEof,
+                "failed to fill whole buffer",
+            ));
+        }
+        Ok(())
+    }
+} // impl io::Read for OwnedBytes
+
+impl From<Vec<u8>> for OwnedBytes {
+    fn from(vec: Vec<u8>) -> Self {
+        Self::new(vec)
+    }
+} // impl From<Vec<u8>> for OwnedBytes
+
+impl PartialEq for OwnedBytes {
+    fn eq(&self, other: &OwnedBytes) -> bool {
+        self.as_slice() == other.as_slice()
+    }
+} // impl PartialEq for OwnedBytes
+
+impl Eq for OwnedBytes {}
+
+impl PartialEq<[u8]> for OwnedBytes {
+    fn eq(&self, other: &[u8]) -> bool {
+        self.as_slice() == other
+    }
+} // impl PartialEq<[u8]> for OwnedBytes
+
+impl PartialEq<str> for OwnedBytes {
+    fn eq(&self, other: &str) -> bool {
+        self.as_slice() == other.as_bytes()
+    }
+} // impl PartialEq<str> for OwnedBytes
+
+impl<'a, T: ?Sized> PartialEq<&'a T> for OwnedBytes
+where
+    OwnedBytes: PartialEq<T>,
+{
+    fn eq(&self, other: &&'a T) -> bool {
+        *self == **other
+    }
+} // impl<'a, T: ?Sized> PartialEq<&'a T> for OwnedBytes where OwnedBytes: PartialEq<T>
