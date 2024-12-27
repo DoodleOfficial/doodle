@@ -1,0 +1,11 @@
+[package]
+name = "zimba"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+lzma = { workspace = true }
+memmap2 = { workspace = true }
+thiserror = { workspace = true }
+zstd = { workspace = true }
+nom = { workspace = true }
