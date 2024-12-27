@@ -1,0 +1,10 @@
+[package]
+name = "bloom"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bincode.workspace = true
+bitvec.workspace = true
+serde.workspace = true
+xxhash-rust.workspace = true
