@@ -1,5 +1,13 @@
 [workspace]
-members = ["crates/bloom", "crates/commons", "crates/kuchiki", "crates/ownedbytes", "crates/robots-policy", "crates/zimba"]
+members = [
+    "crates/bloom",
+    "crates/commons",
+    "crates/file-store",
+    "crates/kuchiki",
+    "crates/ownedbytes",
+    "crates/robots-policy",
+    "crates/zimba",
+]
 resolver = "2"
 
 [profile.release]
@@ -44,7 +52,8 @@ chitchat = "0.5.0"
 chrono = { version = "0.4.23", features = ["serde"] }
 clap = { version = "4.4.6", features = ["derive"] }
 cmake = "0.1"
-common = { path = "crates/common" }
+# commons = { path = "crates/commons" }
+commons = { path = "crates/commons" }
 crc32fast = "1.3.2"
 criterion = "0.5.1"
 crossbeam-channel = "0.5.6"
