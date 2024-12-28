@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/bloom", "crates/commons", "crates/ownedbytes", "crates/robots-policy", "crates/zimba"]
+members = ["crates/bloom", "crates/commons", "crates/kuchiki", "crates/ownedbytes", "crates/robots-policy", "crates/zimba"]
 resolver = "2"
 
 [profile.release]
