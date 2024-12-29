@@ -8,7 +8,14 @@
  * @copyright Copyright (c) 2024 Doodle Developers, Krisna Pranav
  *
  */
-
+mod cloned;
 mod enumerate;
+mod filter;
+mod flatten;
+mod map;
 
+pub use cloned::Cloned;
 pub use enumerate::Enumerate;
+pub use filter::Filter;
+pub use flatten::Flatten;
+pub use map::Map;
