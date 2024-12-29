@@ -3,9 +3,11 @@ members = [
     "crates/bloom",
     "crates/commons",
     "crates/file-store",
-    "crates/kuchiki", "crates/lending-iter",
+    "crates/kuchiki",
+    "crates/lending-iter",
     "crates/ownedbytes",
     "crates/robots-policy",
+    "crates/tantivy",
     "crates/zimba",
 ]
 resolver = "2"
