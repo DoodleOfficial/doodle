@@ -3,7 +3,7 @@ members = [
     "crates/bloom", "crates/client-wasm",
     "crates/commons",
     "crates/file-store",
-    "crates/kuchiki",
+    "crates/kuchiki", "crates/leechy",
     "crates/lending-iter", "crates/optics",
     "crates/ownedbytes",
     "crates/robots-policy",
