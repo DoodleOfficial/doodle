@@ -8,4 +8,7 @@
  * @copyright Copyright (c) 2024 Doodle Developers, Krisna Pranav
  *
  */
-pub mod engine;
+mod engine;
+mod useragent;
+
+pub use engine::Engine;
