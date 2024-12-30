@@ -1,10 +1,10 @@
 [workspace]
 members = [
-    "crates/bloom",
+    "crates/bloom", "crates/client-wasm",
     "crates/commons",
     "crates/file-store",
     "crates/kuchiki",
-    "crates/lending-iter",
+    "crates/lending-iter", "crates/optics",
     "crates/ownedbytes",
     "crates/robots-policy",
     "crates/tantivy",
